@@ -48,7 +48,7 @@ public class Homework {
             PostComment postComment= new PostComment();
             postComment.setId(1L);
             postComment.setText("PostComment");
-            postComment.setPost_id(1L);
+
 
             Post post = new Post();
             post.setId(1L);
@@ -64,14 +64,6 @@ public class Homework {
             tx.commit();
         }
 
-//    try (Session session = sessionFactory.openSession()) {
-//      Author author = session.find(Author.class, 2L);
-//      System.out.println(author);
-//
-//      for (Book book : author.getBooks()) {
-//        System.out.println(book);
-//      }
-//    }
     }
 
 
