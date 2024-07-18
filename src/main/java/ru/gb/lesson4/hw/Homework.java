@@ -40,7 +40,7 @@ public class Homework {
       try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
           // sessionFactory <-> connection
           withSession(sessionFactory);
-//      withSessionCRUD(sessionFactory);
+          withSessionCRUD(sessionFactory);
       }
   }
     private static void withSession(SessionFactory sessionFactory) {
@@ -58,9 +58,9 @@ public class Homework {
             Transaction tx = session.beginTransaction();
             session.persist(post);
             session.persist(postComment);
-            if (true) {
-                throw new RuntimeException();
-            }
+//            if (true) {
+//                throw new RuntimeException();
+//            }
             tx.commit();
         }
 
@@ -72,6 +72,48 @@ public class Homework {
 //        System.out.println(book);
 //      }
 //    }
+    }
+
+
+
+    private static void withSessionCRUD(SessionFactory sessionFactory) {
+        try (Session session = sessionFactory.openSession()) {
+            // session <-> statement
+
+            Post post = session.find(Post.class, 1L);
+            System.out.println("post(1) = " + post);
+        }
+
+        try (Session session = sessionFactory.openSession()) {
+            Transaction tx = session.beginTransaction();
+            Post post = new Post();
+            post.setId(2L);
+            post.setTitle("Post 2");
+
+            session.persist(post); // insert
+            tx.commit();
+        }
+
+        try (Session session = sessionFactory.openSession()) {
+            Post toUpdate = session.find(Post.class, 2L);
+            session.detach(toUpdate);
+            toUpdate.setTitle("UPDATED");
+
+            Transaction tx = session.beginTransaction();
+                session.merge(toUpdate); // update
+            tx.commit();
+        }
+
+        try (Session session = sessionFactory.openSession()) {
+            Post toDelete = session.find(Post.class, 1L);
+
+            Transaction tx = session.beginTransaction();
+            session.remove(toDelete); // delete
+            tx.commit();
+        }
+
+
+
     }
 
 }
