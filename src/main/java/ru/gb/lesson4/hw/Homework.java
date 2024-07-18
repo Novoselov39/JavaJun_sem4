@@ -1,5 +1,14 @@
 package ru.gb.lesson4.hw;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import ru.gb.lesson4.entity.Author;
+import ru.gb.lesson4.entity.AuthorBook;
+import ru.gb.lesson4.entity.Book;
+
+
 public class Homework {
 
   /**
@@ -24,5 +33,45 @@ public class Homework {
    * 1. Можно использовать ЛЮБУЮ базу данных (например, h2)
    * 2. Если запутаетесь, приходите в группу в телеграме или пишите мне @inchestnov в личку.
    */
+
+  public static void main(String[] args) {
+      Configuration configuration = new Configuration();
+      configuration.configure("HW_hibernate.cfg.xml"); // !!! иначе cfg.xml не прочитается
+      try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
+          // sessionFactory <-> connection
+          withSession(sessionFactory);
+//      withSessionCRUD(sessionFactory);
+      }
+  }
+    private static void withSession(SessionFactory sessionFactory) {
+        try (Session session = sessionFactory.openSession()) {
+            PostComment postComment= new PostComment();
+            postComment.setId(1L);
+            postComment.setText("PostComment");
+            postComment.setPost_id(1L);
+
+            Post post = new Post();
+            post.setId(1L);
+            post.setTitle("post");
+
+
+            Transaction tx = session.beginTransaction();
+            session.persist(post);
+            session.persist(postComment);
+            if (true) {
+                throw new RuntimeException();
+            }
+            tx.commit();
+        }
+
+//    try (Session session = sessionFactory.openSession()) {
+//      Author author = session.find(Author.class, 2L);
+//      System.out.println(author);
+//
+//      for (Book book : author.getBooks()) {
+//        System.out.println(book);
+//      }
+//    }
+    }
 
 }

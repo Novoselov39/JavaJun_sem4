@@ -54,9 +54,9 @@ public class JPAMain {
       Transaction tx = session.beginTransaction();
       session.persist(author);
       session.persist(book);
-      if (true) {
-        throw new RuntimeException();
-      }
+//      if (true) {
+//        throw new RuntimeException();
+//      }
 
       session.persist(authorBook);
       tx.commit();

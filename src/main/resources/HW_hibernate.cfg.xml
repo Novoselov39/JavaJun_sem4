@@ -12,8 +12,8 @@
         <!-- none, create, create-drop, update, validate-->
         <property name="hibernate.hbm2ddl.auto">create</property>
 
-        <mapping class="ru.gb.lesson4.entity.Author"/>
-        <mapping class="ru.gb.lesson4.entity.Book"/>
-        <mapping class="ru.gb.lesson4.entity.AuthorBook"/>
+        <mapping class="ru.gb.lesson4.hw.Post"/>
+        <mapping class="ru.gb.lesson4.hw.PostComment"/>
+
     </session-factory>
 </hibernate-configuration>
